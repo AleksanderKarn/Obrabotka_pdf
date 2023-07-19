@@ -37,7 +37,7 @@ car_list = ['CHERY', 'HYUNDAI', 'JAC', 'KIA', 'NISSAN', 'SKODA', 'TOYOTA', 'VOLK
 
 
 
-username = 'alexander.karnauhov.1991@mail.ru'
-password = 'HChCNK67jLmsvZdQJ7Bc'
+username = ''
+password = ''
 email_server = "imap.mail.ru"
 directory = 'Obrabotka_pdf/'
