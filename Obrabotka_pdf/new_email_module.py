@@ -2,14 +2,10 @@ import imaplib
 import email
 from email.header import decode_header
 
-from settings import username, password, email_server, directory
-
 
 def get_pdf_files_for_mails(part, directory, subject):
-
     if part.get_content_maintype() == 'multipart':
         for subpart in part.get_payload():
-
             get_pdf_files_for_mails(subpart, directory, subject)
     elif part.get_content_type() == 'application/pdf':
         try:
@@ -18,9 +14,15 @@ def get_pdf_files_for_mails(part, directory, subject):
                 return
 
             filename_ = subject
-            with open(f"pdf_files/{filename_}.pdf", 'wb') as f:
-                print(f"Записали в PDF даныне из {filename_}")
-                f.write(part.get_payload(decode=True))
+            with open("cashe/cashe.txt", "r") as f:
+                data = f.read()
+                data_list = data.replace(' ', '').split(',')
+                if f"{filename_}.pdf" in data_list:
+                    print(f"Файл {filename_} существует")
+                else:
+                    with open(f"pdf_files/{filename_}.pdf", 'wb') as f:
+                        print(f"Записали в PDF даныне из {filename_}")
+                        f.write(part.get_payload(decode=True))
         except Exception as e:
             print(e)
 
@@ -54,9 +56,5 @@ def connector_for_mail(username, password, email_server, directory):
             for part in email_message.get_payload():
                 get_pdf_files_for_mails(part, directory, subject)
 
-
     mail.close()
     mail.logout()
-
-
-connector_for_mail(username, password, email_server, directory)
